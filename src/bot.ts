@@ -33,10 +33,11 @@ export class ChatGPTBot {
   botName: string = "";
   ready = false;
   setBotName(botName: string) {
+    console.log('setBotName::', botName)
     this.botName = botName;
   }
   get chatGroupTiggerRegEx(): RegExp {
-    return new RegExp(`^@${this.botName}\\s`);
+    return new RegExp(`^@${this.botName}`);
   }
   get chatPrivateTiggerRule(): RegExp | undefined {
     const { chatPrivateTiggerKeyword, chatTiggerRule } = this;
@@ -88,6 +89,7 @@ export class ChatGPTBot {
       message = message.slice(SINGLE_MESSAGE_MAX_SIZE);
     }
     messages.push(message);
+    console.log('gpt messages::', messages)
     for (const msg of messages) {
       await talker.say(msg);
     }
@@ -108,6 +110,8 @@ export class ChatGPTBot {
     }
     if (triggered) {
       console.log(`🎯 Triggered ChatGPT: ${text}`);
+    } else {
+      console.log('tiggerGPTMessage::', text, privateChat ? this.chatPrivateTiggerRule : this.chatGroupTiggerRegEx)
     }
     return triggered;
   }

@@ -16,7 +16,7 @@ const bot = WechatyBuilder.singleton()
 
 async function main() {
   const initializedAt = Date.now()
-  await chatGPTBot.startGPTBot();
+  // await chatGPTBot.startGPTBot();
   bot
     .on("scan", async (qrcode, status) => {
       const url = `https://wechaty.js.org/qrcode/${encodeURIComponent(qrcode)}`;
@@ -26,7 +26,7 @@ async function main() {
       );
     })
     .on("login", async (user) => {
-      console.log(`User ${user} logged in`);
+      console.log(`User ${user} logged in, named:`, user.name());
       chatGPTBot.setBotName(user.name());
     })
     .on("message", async (message) => {
